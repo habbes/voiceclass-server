@@ -60,3 +60,17 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# virtualenv
+Scripts
+Include
+Lib
+include
+lib
+scripts
+
+# IDE
+.idea
+
+# dotenv
+.env
