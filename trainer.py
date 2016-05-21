@@ -1,6 +1,5 @@
 
 import os, random, string, errno, classes
-from pyAudioAnalysis import audioTrainTest as at
 
 DATA_DIR = os.environ['DATA_DIR']
 
@@ -11,7 +10,7 @@ def init_class_dirs():
 
     '''
     for classname in classes.CLASSES:
-        path = os.path.join(DATA_DIR, 'classes', classname)
+        path = class_dir(classname)
         try:
             os.makedirs(path)
         except OSError as e:
@@ -19,6 +18,16 @@ def init_class_dirs():
                 raise IOError('Could not create directory: ' + path)
 
 
+def class_dir(classname):
+    '''
+
+    Args:
+        classname:
+
+    Returns: the path of the directory for the specified class
+
+    '''
+    return os.path.join(DATA_DIR, 'classes', classname)
 
 def random_filename():
     '''
@@ -39,7 +48,7 @@ def classify_audio(clip, classname):
 
     '''
     filename = random_filename()
-    file = open(os.path.join(DATA_DIR, classname, filename), 'wb')
+    file = open(os.path.join(class_dir(classname), filename), 'wb')
     file.write(clip)
     file.close()
 
