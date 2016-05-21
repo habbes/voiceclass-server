@@ -1,20 +1,21 @@
-import os, random, string, errno, classes
+import os, random, string, errno, classes, hashlib
 from pyAudioAnalysis import audioTrainTest as trainer
 
 DEFAULT_DATA_DIR = os.environ['DATA_DIR']
 
 
-def random_filename():
-    '''
+def wav_filename(name):
+    return name + '.wav'
 
-    Returns: random string with .csv extension
 
-    '''
-    return ''.join(random.sample(string.ascii_lowercase + string.digits, 20)) + '.wav'
+def file_hash(data):
+    wav_filename('none')
+    return hashlib.sha256(data).hexdigest()
 
-def makedir(dir):
+
+def makedir(path):
     try:
-        os.makedirs(dir)
+        os.makedirs(path)
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise e
@@ -53,12 +54,12 @@ class Classifier(object):
         makedir(self.temp_dir)
 
     def classify_audio(self, audio, class_name):
-        filename = random_filename()
-        file_path = os.path.join(self.class_dir_dict[class_name], filename)
-        file = open(file_path, 'wb')
-        file.write(audio)
-        file.close()
-        return filename, file_path
+        file_id = file_hash(audio)
+        file_path = os.path.join(self.class_dir_dict[class_name], wav_filename(file_id))
+        with open(file_path, 'wb') as f:
+            f.write(audio)
+
+        return file_id, file_path
 
     def train(self):
         trainer.featureAndTrain(
@@ -72,19 +73,22 @@ class Classifier(object):
         )
 
     def detect_class(self, audio):
-        filename, path = self.save_unclassified(audio)
+        file_id, path = self.save_unclassified(audio)
         res = trainer.fileClassification(
             inputFile=path,
             modelName=self.classifier_path,
-            modelType=self.classifier_type
+            modelType=self.classifier_type,
         )
-        return filename, res
+        return file_id, res
+
+    def unclassified_path(self, file_id):
+        return os.path.join(self.temp_dir, wav_filename(file_id))
 
     def save_unclassified(self, audio):
-        filename = random_filename()
-        path = os.path.join(self.temp_dir, filename)
-        file = open(path, 'wb')
-        file.write(audio)
-        file.close()
-        return filename, path
+        file_id = file_hash(audio)
+        path = self.unclassified_path(file_id)
+        with open(path, 'wb') as f:
+            f.write(audio)
+
+        return file_id, path
 
