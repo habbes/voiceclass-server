@@ -9,8 +9,8 @@ def wav_filename(name):
 
 
 def file_hash(data):
-    wav_filename('none')
-    return hashlib.sha256(data).hexdigest()
+    return ''.join(random.sample(string.ascii_lowercase + string.digits, 20))
+    # return hashlib.sha256(data).hexdigest()  #this causes errors in training classifier
 
 
 def makedir(path):
@@ -30,7 +30,7 @@ class Classifier(object):
         self.temp_dir = ''
         self.classifier_dir = ''
         self.classifier_path = ''
-        self.classifier_type = 'knn'    #using svm brings an error
+        self.classifier_type = 'knn'    # using svm brings an error
         self.classifier_name = 'VoiceGenderAgeClassifier'
         self.init_dirs()
 
@@ -91,4 +91,10 @@ class Classifier(object):
             f.write(audio)
 
         return file_id, path
+
+    def classify_unclassified(self, file_id, class_name):
+        path = self.unclassified_path(file_id)
+        with open(path, 'rb') as f:
+            audio = f.read()
+            return self.classify_audio(audio, class_name)
 
