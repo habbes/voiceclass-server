@@ -80,10 +80,11 @@ class Classifier(object):
             modelType=self.classifier_type,
         )
         res = {
+            'id': file_id,
             'class': detected[2][0],
             'probability': detected[1][0]
         }
-        return file_id, res
+        return res
 
     def unclassified_path(self, file_id):
         return os.path.join(self.temp_dir, wav_filename(file_id))
