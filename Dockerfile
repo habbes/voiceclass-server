@@ -12,10 +12,11 @@ RUN pip install numpy \
     && pip install mlpy \
     && pip install eyed3
     && pip install flask
+    && pip install gunicorn
 
 ADD . /code
 WORKDIR /code
-EXPOSE 5000
+EXPOSE 80
 ENV DATA_DIR /data
 VOLUME /data
-CMD ["python", "server.py"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:80", "server:app"]
