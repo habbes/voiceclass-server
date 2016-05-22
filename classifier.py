@@ -74,11 +74,15 @@ class Classifier(object):
 
     def detect_class(self, audio):
         file_id, path = self.save_unclassified(audio)
-        res = trainer.fileClassification(
+        detected = trainer.fileClassification(
             inputFile=path,
             modelName=self.classifier_path,
             modelType=self.classifier_type,
         )
+        res = {
+            'class': detected[2][0],
+            'probability': detected[1][0]
+        }
         return file_id, res
 
     def unclassified_path(self, file_id):
@@ -89,7 +93,6 @@ class Classifier(object):
         path = self.unclassified_path(file_id)
         with open(path, 'wb') as f:
             f.write(audio)
-
         return file_id, path
 
     def classify_unclassified(self, file_id, class_name):
