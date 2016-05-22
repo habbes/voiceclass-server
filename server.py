@@ -45,8 +45,9 @@ def classify():
 
 
 @app.route('/api/feedback', methods=['POST'])
-def feedback(file_id):
-    class_name = request.form('class')
+def feedback():
+    file_id = request.form['id']
+    class_name = request.form['class']
     try:
         classifier.classify_unclassified(file_id, class_name)
         classifier.train()
