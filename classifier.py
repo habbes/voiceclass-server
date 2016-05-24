@@ -62,6 +62,7 @@ class Classifier(object):
         return file_id, file_path
 
     def train(self):
+        print 'train classifier'
         trainer.featureAndTrain(
             listOfDirs=self.class_dir_list,
             mtWin=1.0,
@@ -71,19 +72,26 @@ class Classifier(object):
             classifierType=self.classifier_type,
             modelName=self.classifier_path
         )
+        print 'classifier trained'
 
     def detect_class(self, audio):
+        print 'detect_class'
+        print 'save unclassified'
         file_id, path = self.save_unclassified(audio)
+        print 'file saved', path
+        print 'classify file'
         detected = trainer.fileClassification(
             inputFile=path,
             modelName=self.classifier_path,
             modelType=self.classifier_type,
         )
+        print 'file classified'
         res = {
             'id': file_id,
             'class': detected[2][0],
             'probability': detected[1][0]
         }
+        print res
         return res
 
     def unclassified_path(self, file_id):
