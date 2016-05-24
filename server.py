@@ -1,10 +1,24 @@
-import json
+import json, audioutil
 from flask import Flask, request
 from classifier import Classifier
+from base64 import b64decode
 
 classifier = Classifier()
 app = Flask(__name__)
 app.debug = True
+
+
+def get_audio(r):
+    data = b64decode(r['data'])
+    if(r['type'] == 'wav'):
+        return data
+    # convert raw pcm to wav
+    return audioutil.make_wav(
+        data=data,
+        sample_rate=int(r['sampleRate']),
+        channel_count=int(r['channelCount']),
+        sample_width=int(r['sampleWidth'])
+    )
 
 
 def json_response(resp, status=200):
@@ -22,9 +36,9 @@ def ping():
 
 @app.route('/api/train', methods=['POST'])
 def train():
-    class_name = request.form('class')
-    f = request.files['audio']
-    audio = f.read()
+    body = json.loads(request.body)
+    class_name = body['class']
+    audio = get_audio(body['audio'])
     try:
         classifier.classify_audio(audio, class_name)
         classifier.train()
@@ -35,8 +49,8 @@ def train():
 
 @app.route('/api/classify', methods=['POST'])
 def classify():
-    f = request.files['audio']
-    audio = f.read()
+    body = json.loads(request.body)
+    audio = get_audio(body['audio'])
     try:
         res = classifier.detect_class(audio)
         return json_response(res)
@@ -46,8 +60,9 @@ def classify():
 
 @app.route('/api/feedback', methods=['POST'])
 def feedback():
-    file_id = request.form['id']
-    class_name = request.form['class']
+    body = json.loads(request.body)
+    file_id = body["id"]
+    class_name = body["class"]
     try:
         classifier.classify_unclassified(file_id, class_name)
         classifier.train()
