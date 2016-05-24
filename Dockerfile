@@ -10,8 +10,8 @@ RUN pip install numpy \
     && pip install scikits.talkbox \
     && pip install simplejson \
     && pip install mlpy \
-    && pip install eyed3
-    && pip install flask
+    && pip install eyed3 \
+    && pip install flask \
     && pip install gunicorn
 
 ADD . /code
