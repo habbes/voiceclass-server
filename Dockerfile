@@ -19,4 +19,4 @@ WORKDIR /code
 EXPOSE 80
 ENV DATA_DIR /data
 VOLUME /data
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:80", "server:app"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:80", "-t", "90", "server:app"]
