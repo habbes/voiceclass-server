@@ -36,7 +36,7 @@ def ping():
 
 @app.route('/api/train', methods=['POST'])
 def train():
-    body = json.loads(request.body)
+    body = json.loads(request.data)
     class_name = body['class']
     audio = get_audio(body['audio'])
     try:
@@ -49,7 +49,7 @@ def train():
 
 @app.route('/api/classify', methods=['POST'])
 def classify():
-    body = json.loads(request.body)
+    body = json.loads(request.data)
     audio = get_audio(body['audio'])
     try:
         res = classifier.detect_class(audio)
@@ -60,7 +60,7 @@ def classify():
 
 @app.route('/api/feedback', methods=['POST'])
 def feedback():
-    body = json.loads(request.body)
+    body = json.loads(request.data)
     file_id = body["id"]
     class_name = body["class"]
     try:
