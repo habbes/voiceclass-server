@@ -7,6 +7,7 @@ def audio(name):
     f.close()
     return content
 
+me = audio('me');
 maleOk = audio('male-ok')
 maleGoodbye = audio('male-goodbye')
 maleNotScare = audio('male-notscare')
@@ -18,4 +19,4 @@ classifier.classify_audio(maleGoodbye, classes.MALE_ADULT)
 classifier.classify_audio(maleNotScare, classes.MALE_ADULT)
 classifier.classify_audio(femaleActUnprod, classes.FEMALE_ADULT)
 classifier.train()
-print classifier.detect_class(maleGoodbye)
+print classifier.detect_class(me)

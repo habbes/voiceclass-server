@@ -86,11 +86,13 @@ class Classifier(object):
             modelType=self.classifier_type,
         )
         print 'file classified'
+        i = detected[0]
         res = {
             'id': file_id,
-            'class': detected[2][0],
-            'probability': detected[1][0]
+            'class': detected[2][i],
+            'probability': detected[1][i]
         }
+        print detected
         print res
         return res
 
