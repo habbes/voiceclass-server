@@ -26,7 +26,6 @@ Install and run the server in a Docker container.
 The server exposes an API for classifying voice recordings as well training the classifier. It uses **JSON** for both request and response bodies.
 
 ### Available Classes
-
 - FemaleChild
 - FemaleTeen
 - FemaleAdult
@@ -47,27 +46,22 @@ Use this to get a classification of a voice recording's.
 - Description: Object containing the audio data and metadata used to properly decode it
 
 ##### audio.format
-
 - Type: **string**
 - Description: Audio format: currently only `pcm` is supported
 
-###### audio.data
-
+##### audio.data
 - Type: **string**
 - Description: Base-64 encoding of the raw **PCM** data of the audio recording
 
-###### audio.channelCount
-
+##### audio.channelCount
 - Type: **number**
 - Description: Number of channels in the audio recording
 
-###### audio.sampleRate
-
+##### audio.sampleRate
 - Type: **number**
 - Description: Sample rate of the recording in **Hz**
 
-###### audio.sampleSize
-
+##### audio.sampleSize
 - Type: **number**
 - Description: Sample size in **bytes**
 
