@@ -23,6 +23,19 @@ Install and run the server in a Docker container.
 - Test using the docker host IP: `http://192.168.99.100:5000`
 
 ## API
+The server exposes an API for classifying voice recordings as well training the classifier. It uses **JSON** for both request and response bodies.
+
+### `/api/classify`
+Use this to get a classification of a voice recording's.
+
+#### Request
+##### audio
+- Type: Object
+- Description: Object containing the audio data and metadata used to properly decode it
+###### audio.data
+- Type: string
+- Description: Base-64 encoding of the raw **PCM** data of the audio recording
+
 TODO: Complete docs...
 
 
