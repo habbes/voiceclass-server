@@ -29,10 +29,13 @@ The server exposes an API for classifying voice recordings as well training the 
 Use this to get a classification of a voice recording's.
 
 #### Request
+
 ##### audio
 - Type: Object
 - Description: Object containing the audio data and metadata used to properly decode it
+
 ###### audio.data
+
 - Type: string
 - Description: Base-64 encoding of the raw **PCM** data of the audio recording
 
