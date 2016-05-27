@@ -81,9 +81,9 @@ Use this to get a classification of a voice recording's.
 - Type: **string**
 - Description: The class name for the identified sex and age category
 
-### `api/feedback`
+### `/api/feedback`
 
-### `api/train`
+### `/api/train`
 
 TODO: Complete docs...
 
