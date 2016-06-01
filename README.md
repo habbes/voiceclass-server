@@ -37,7 +37,7 @@ The server exposes an API for classifying voice recordings as well training the 
 
 
 ### `/api/classify`
-Use this to get a classification of a voice recording's.
+Use this to get a classification of a voice recording.
 
 #### Request
 
@@ -76,6 +76,24 @@ Use this to get a classification of a voice recording's.
 - Description: The class name for the identified sex and age category
 
 ### `/api/feedback`
+Use this to provide feedback to the system after receiving results of classification, this feedback allows the system to improve
+its classifier by providing additional training data.
+
+#### Request
+
+##### id
+- Type: **string**
+- Description: Identifier returned as part of the result of a call to the */api/classify* endpoint
+
+##### class
+- Type: **string**
+- Description: The correct class for the recording corresponding to the specified id.
+
+#### Response
+
+##### message
+- Type: **string**
+- Description: message with value "`OK`"
 
 ### `/api/train`
 
