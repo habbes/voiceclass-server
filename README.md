@@ -108,4 +108,10 @@ This is used to add data to train the classifier.
 - Type: **string**
 - Description: The class the attached audio belongs to.
 
+#### Response
+
+##### message
+- Type: **string**
+- Description: message with value "`OK`"
+
 
