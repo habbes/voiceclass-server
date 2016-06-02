@@ -96,7 +96,16 @@ its classifier by providing additional training data.
 - Description: message with value "`OK`"
 
 ### `/api/train`
+This is used to add data to train the classifier.
 
-TODO: Complete docs...
+#### Request
+
+##### audio
+- Type: **object**
+- Description: Same as for the */api/classify* endpoint
+
+##### class
+- Type: **string**
+- Description: The class the attached audio belongs to.
 
 
